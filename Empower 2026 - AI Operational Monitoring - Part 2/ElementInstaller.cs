@@ -39,7 +39,12 @@
 				System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
 				engine.FindElement("Empower 2026 - AI - Video server 2")?.SetParameter(102, 1);
 			}
-			created = CreateElement("Empower 2026 - AI - PM in tables ", "Empower 2026 - AI - PM in Tables - fast", "1.0.0.3", viewID);
+			created = CreateElement("Empower 2026 - AI - PM in tables", "Empower 2026 - AI - PM in Tables - fast", "1.0.0.3", viewID);
+			if (created)
+			{
+				System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+				engine.FindElement("Empower 2026 - AI - PM in tables")?.SetParameter(506, 1);
+			}
 
 			viewID = CreateViews(new string[] { "DataMiner Catalog", "Empower 2026", "AI Operational Monitoring", "Proactive Detection Demo" });
 			CreateElement("Empower 2026 - AI - SFP Monitor", "Empower 2026 - AI - SFP - fast", "0.0.0.1", viewID);
