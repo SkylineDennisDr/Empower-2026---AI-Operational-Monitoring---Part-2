@@ -1,0 +1,2 @@
+Protocol Name: Empower 2025 - AI - Content Management Server 1 - fast
+Protocol Version: 0.0.0.1

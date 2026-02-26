@@ -22,8 +22,34 @@
 
 		public void InstallDefaultContent()
 		{
-			int viewID = CreateViews(new string[] { "DataMiner Catalog", "Empower2026"});
-			CreateElement($"RAD - Commtia LON 1", "AI - Commtia DAB", "1.0.0.1-fast", viewID, "TrendTemplate_PA_Demo", "AlarmTemplate_PA_Demo");
+			int viewID = CreateViews(new string[] { "DataMiner Catalog", "Empower 2026", "AI Operational Monitoring", "Behavioral Anomaly Detection Demo" });
+			CreateElement("Empower 2026 - AI - Audio bit rate", "Empower 2026 - AI - Audio bit rate CBR-VBR - fast", "0.0.0.1", viewID);
+			CreateElement("Empower 2026 - AI - Task Manager", "Empower 2026 - AI - Task Manager", "0.0.0.1", viewID);
+
+			viewID = CreateViews(new string[] { "DataMiner Catalog", "Empower 2026", "AI Operational Monitoring", "Pattern Matching Demo" });
+
+			viewID = CreateViews(new string[] { "DataMiner Catalog", "Empower 2026", "AI Operational Monitoring", "Proactive Detection Demo" });
+			CreateElement("Empower 2026 - AI - SFP Monitor", "Empower 2026 - AI - SFP - fast", "0.0.0.1", viewID);
+			CreateElement("Empower 2026 - AI - AMS Server", "Empower 2026 - AI - AMS Server", "0.0.0.3", viewID);
+
+			int CMSViewID = CreateViews(new string[] { "DataMiner Catalog", "Empower 2026","AI Operational Monitoring", "Proactive Detection Demo",
+				"Content Management Servers" });
+			CreateElement("Empower 2026 - AI - CMS 1", "Empower 2026 - AI - Content Management Server 1 - fast", "0.0.0.1", CMSViewID);
+			CreateElement("Empower 2026 - AI - CMS 2", "Empower 2026 - AI - Content Management Server 2 - fast", "0.0.0.1", CMSViewID);
+			CreateElement("Empower 2026 - AI - CMS 3", "Empower 2026 - AI - Content Management Server 3 - fast", "0.0.0.1", CMSViewID);
+			AssignVisioToView(CMSViewID, "Empower 2025 - AI - Content Management Server.vsdx");
+
+			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
+			engine.FindElement("Empower 2026 - AI - Audio bit rate")?.SetParameter(102, 1);
+			engine.FindElement("Empower 2026 - AI - CMS 1")?.SetParameter(102, 1);
+			engine.FindElement("Empower 2026 - AI - CMS 2")?.SetParameter(102, 1);
+			engine.FindElement("Empower 2026 - AI - CMS 3")?.SetParameter(102, 1);
+
+			viewID = CreateViews(new string[] { "DataMiner Catalog", "Empower 2026", "AI Operational Monitoring", "Relational Anomaly Detection Demo" });
+			CreateElement($"RAD - Commtia LON 1", "AI - Commtia DAB - fast", "1.0.0.3", viewID, "TrendTemplate_PA_Demo", "AlarmTemplate_PA_Demo");
+			Thread.Sleep(5000);
+			CreateElement($"RAD - Commtia LON 2", "AI - Commtia DAB - fast", "1.0.0.3", viewID, "TrendTemplate_PA_Demo", "AlarmTemplate_PA_Demo");
+			Thread.Sleep(5000);
 		}
 
 		private void AssignVisioToView(int viewID, string visioFileName)
@@ -122,33 +148,9 @@
 			};
 
 			var dms = engine.GetDms();
-			if (dms.ElementExists(elementName)) //Delete element first if it already exists
-			{
-				var elementRequest = new GetElementByNameMessage(elementName);
-				var elementResponse = engine.SendSLNetSingleResponseMessage(elementRequest);
-				if (!(elementResponse is ElementInfoEventMessage elementInfo))
-					throw new ArgumentException("Unexpected message returned by DataMiner");
+			if (dms.ElementExists(elementName))
+				return;
 
-				// Remove the element if it exists
-				var deleteRequest = new SetElementStateMessage(elementInfo.DataMinerID, elementInfo.ElementID, Skyline.DataMiner.Net.Messages.ElementState.Deleted, true);
-				engine.SendSLNetMessage(deleteRequest);
-				System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-			}
-
-			//Verify deletion succeeded
-			for (int i = 0; i < 5; ++i)
-			{
-				if (dms.ElementExists(elementName))
-				{
-					Thread.Sleep(5000);
-				}
-				else
-				{
-					break;
-				}
-			}
-
-			//create element
 			engine.SendSLNetSingleResponseMessage(request);
 		}
 	}

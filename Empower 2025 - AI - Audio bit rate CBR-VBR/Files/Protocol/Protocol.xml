@@ -1,0 +1,772 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+
+****************************************************************************
+*  Copyright (c) 2018,  Skyline Communications NV  All Rights Reserved.    *
+****************************************************************************
+
+Revision History:
+
+DATE		VERSION		AUTHOR				COMMENTS
+
+03/06/2024	0.0.0.1		TDP, Skyline		Initial version
+****************************************************************************
+
+-->
+<Protocol xmlns="http://www.skyline.be/protocol">
+	<Name>Empower 2026 - AI - Audio bit rate CBR-VBR - fast</Name>
+	<Description>Simulate the audio bit rate parameter of an encoder</Description>
+	<Version>0.0.0.1</Version>
+	<Provider>Skyline Communications</Provider>
+	<ElementType>virtual</ElementType>
+	<Type relativeTimers="true">virtual</Type>
+	<Display defaultPage="General" pageOrder="General" wideColumnPages="General" />
+	<SNMP includepages="true">auto</SNMP>
+	<Params>
+		<Param id="1">
+			<Name>AudioChannels</Name>
+			<Description>Audio Channels</Description>
+			<Information>
+				<Text>Audio Channels</Text>
+				<Subtext>A table with simulated channels</Subtext>
+			</Information>
+			<Type>array</Type>
+			<ArrayOptions index="0">
+				<NamingFormat>;Channel ;10</NamingFormat>
+				<ColumnOption idx="0" pid="10" type="autoincrement" value="" options=";save"/>
+				<ColumnOption idx="1" pid="11" type="retrieved" value="" options=";disableHeaderSum"/>
+				<ColumnOption idx="2" pid="12" type="displaykey" options=""/>
+				<ColumnOption idx="3" pid="13" type="retrieved" value="" options=";save"/>
+			</ArrayOptions>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="tab=columns:10|0-12|2-11|1,width:0-116-100,sort:STRING-STRING-INT,lines:0,filter:true">table</Type>
+			</Measurement>
+		</Param>
+		<Param id="10" trending="false">
+			<Name>AudioChannelsChannelID</Name>
+			<Description>Channel ID</Description>
+			<Information>
+				<Text>Channel ID</Text>
+				<Subtext>The id of the simulated channel</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>text</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="11" historySet="true" trending="true" pollingInterval="300000">
+			<Name>AudioChannelsBitRate</Name>
+			<Description>Bit Rate</Description>
+			<Information>
+				<Text>Channel Bit Rate</Text>
+				<Subtext>A simulated channel bitrate</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Decimals>4</Decimals>
+				<Units>kBps</Units>
+				<Range>
+					<Low>0</Low>
+					<High>360</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+		</Param>
+		<Param id="12" trending="false">
+			<Name>AudioChannelsChannelName</Name>
+			<Description>Channel Name</Description>
+			<Information>
+				<Text>Channel Name</Text>
+				<Subtext>The name of the simulated channel</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>text</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="13" trending="false" save="true">
+			<Name>AudioChannelsAnomalyGenerated</Name>
+			<Description>Anomaly Generated</Description>
+			<Information>
+				<Text>Whether anomalous data for this was generated</Text>
+				<Subtext>Yes if anomalous data for this channel was generated.</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+		</Param>
+
+		<Param id="102">
+			<Name>GenerateDataFirst</Name>
+			<Description>Generate Channel 1</Description>
+			<Type>write</Type>
+			<Information>
+				<Text>Generate Channel 1</Text>
+				<Subtext>Genereate the data until now for the first channel.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="150">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Generate Channel 1</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="103">
+			<Name>GenerateData3</Name>
+			<Description>Generate Channels 2, 3 and 4</Description>
+			<Type>write</Type>
+			<Information>
+				<Text>Generate channels 2, 3 and 4</Text>
+				<Subtext>Genereate the data for channels 2, 3 and 4.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="150">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Generate Channels 2, 3 and 4</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="104">
+			<Name>GenerateData5</Name>
+			<Description>Generate Channel 5</Description>
+			<Type>write</Type>
+			<Information>
+				<Text>Generate channel 5</Text>
+				<Subtext>Genereate the data for channel 5.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>3</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="150">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Generate Channel 5</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="3" trending="false" save="true">
+			<Name>DataGenerated</Name>
+			<Description>Data Generated?</Description>
+			<Information>
+				<Text>Whether data was generated</Text>
+				<Subtext>Whether data was already generated for the parameters above. To generate data, press the button &#39;Generate Data&#39;.</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>No</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>4</Row>
+					</Position>
+				</Positions>
+			</Display>
+		</Param>
+		<Param id="60001">
+			<Name>pushData</Name>
+			<Description>Push Data</Description>
+			<Type>dummy</Type>
+		</Param>
+		<Param id="60002" trending="false" save="true">
+			<Name>lastRowNumber</Name>
+			<Description>Last Row Number</Description>
+			<Information>
+				<Text>Last row number</Text>
+				<Subtext>The number of the last row that was read in from the data</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+		</Param>
+		<Param id="60003" trending="false" save="true">
+			<Name>startTime</Name>
+			<Description>Start time</Description>
+			<Information>
+				<Text>Start time</Text>
+				<Subtext>The time at which the first data was pushed</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Decimals>8</Decimals>
+			</Interprete>
+			<Measurement>
+				<Type options="datetime">number</Type>
+			</Measurement>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+		</Param>
+		<Param id="60004" trending="false" save="false">
+			<Name>busy</Name>
+			<Description>Busy?</Description>
+			<Information>
+				<Text>Whether we are busy generating data</Text>
+				<Subtext>Whether we are currently busy generating data.</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>No</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+		</Param>
+		<Param id="60005" trending="false" save="true">
+			<Name>historyGenerated</Name>
+			<Description>History generated?</Description>
+			<Information>
+				<Text>Whether history data has been generated</Text>
+				<Subtext>Whether all history data has been generated.</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>No</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+		</Param>
+		<Param id="60006" trending="false" save="true">
+			<Name>started</Name>
+			<Description>Started?</Description>
+			<Information>
+				<Text>Whether we started generating data</Text>
+				<Subtext>Yes if we started generating data, otherwise No</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>No</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>false</RTDisplay>
+			</Display>
+		</Param>
+	</Params>
+	<QActions>
+		<QAction id="1" name="Data" encoding="csharp" options="precompile">
+
+			<![CDATA[using Skyline.DataMiner.Scripting;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+
+namespace Skyline.Protocol.Model
+{
+    public class GeneratedData
+    {
+        public List<double> OldNormalData;
+        public List<double> NewNormalData;
+        public List<double> AnomalousData;
+    }
+    public class GeneratedDataCollection
+    {
+        private List<TimeSpan> OldNormalDataTimes_;
+        private TimeSpan NewNormalDataPollingTime_;
+        private int NewNormalDataPoints_;
+
+        public TimeSpan AnomalousDataPollingTime;
+        public int AnomalousDataPoints;
+        public List<GeneratedData> Data;
+
+        private int OldDataPoints => OldNormalDataTimes_.Count;
+
+        public TimeSpan OldDataDuration()
+        {
+            return OldNormalDataTimes_[OldNormalDataTimes_.Count - 1];
+        }
+
+        public TimeSpan AnomalousDataDuration()
+        {
+            return TimeSpan.FromMinutes(AnomalousDataPoints * AnomalousDataPollingTime.TotalMinutes);
+        }
+
+        public DateTime GetTime(DateTime startTime, int index)
+        {
+            if (index < OldNormalDataTimes_.Count)
+                return startTime + OldNormalDataTimes_[index];
+
+            var oldDataDuration = OldNormalDataTimes_[OldNormalDataTimes_.Count - 1];
+            var oldEndTime = startTime + oldDataDuration + NewNormalDataPollingTime_;
+            return oldEndTime.AddMinutes((index - OldDataPoints) * NewNormalDataPollingTime_.TotalMinutes);
+        }
+
+        public double GetNormalValue(int channel, int index)
+        {
+            if (index < OldNormalDataTimes_.Count)
+                return Data[channel].OldNormalData[index];
+            else
+                return Data[channel].NewNormalData[(index - OldDataPoints) % NewNormalDataPoints_];
+        }
+
+        private static double GenerateGaussian(Random rand, double mean, double stdDev)
+        {
+            //Source: https://stackoverflow.com/questions/218060/random-gaussian-variables
+            double u1 = 1.0 - rand.NextDouble(); //uniform(0,1] random doubles
+            double u2 = 1.0 - rand.NextDouble();
+            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
+            double randNormal = mean + stdDev * randStdNormal; //random normal(mean,stdDev^2)
+
+            return randNormal;
+        }
+
+        public GeneratedDataCollection()
+        {
+            NewNormalDataPollingTime_ = TimeSpan.FromMinutes(10);
+            AnomalousDataPollingTime = TimeSpan.FromMinutes(5);
+            NewNormalDataPoints_ = (int)(TimeSpan.FromDays(7).TotalMinutes / NewNormalDataPollingTime_.TotalMinutes); //1008 points (but not all read in)
+            AnomalousDataPoints = 100;
+            int nrOfChannels = 5;
+
+            OldNormalDataTimes_ = new List<TimeSpan>();
+            var duration = TimeSpan.FromMinutes(0);
+            var VeryOldPollingTime = TimeSpan.FromMinutes(30); //336 points
+            while (duration <= TimeSpan.FromDays(7))
+            {
+                duration += VeryOldPollingTime;
+                OldNormalDataTimes_.Add(duration);
+            }
+            var OldPollingTime = TimeSpan.FromMinutes(20);//288 points
+            while (duration <= TimeSpan.FromDays(11))
+            {
+                duration += OldPollingTime;
+                OldNormalDataTimes_.Add(duration);
+            }
+            var NotSoPollingTime = TimeSpan.FromMinutes(10);//432 points
+            while (duration <= TimeSpan.FromDays(14))
+            {
+                duration += NotSoPollingTime;
+                OldNormalDataTimes_.Add(duration);
+            }
+
+            Data = new List<GeneratedData>();
+            for (int j = 0; j < nrOfChannels; ++j)
+            {
+                Random rand = new Random(j + 2);
+                var oldData = new List<double>();
+                var newData = new List<double>();
+                var anomalousData = new List<double>();
+
+                for (int i = 0; i < OldNormalDataTimes_.Count; ++i)
+                    oldData.Add(GenerateGaussian(rand, 96.01, 0.005));
+                for (int i = 0; i < NewNormalDataPoints_; ++i)
+                    newData.Add(GenerateGaussian(rand, 96.01, 0.005));
+                for (int i = 0; i < AnomalousDataPoints; ++i)
+                {
+                    double value = GenerateGaussian(rand, 95.96, 0.02);
+                    if (i < 8)
+                        value += 0.04 - i * 0.005;
+                    anomalousData.Add(value);
+                }
+
+                Data.Add(new GeneratedData()
+                {
+                    OldNormalData = oldData,
+                    NewNormalData = newData,
+                    AnomalousData = anomalousData
+                });
+            }
+        }
+
+    }
+
+    public class Data
+    {
+        private static GeneratedDataCollection dataCollection = null;
+        public static bool FastVersion = true;
+
+        public static GeneratedDataCollection GetData()
+        {
+            if (dataCollection == null)
+                dataCollection = new GeneratedDataCollection();
+
+            return dataCollection;
+        }
+
+        public static bool WaitUntilNotBusy(SLProtocolExt protocol)
+        {
+            DateTime timeout = DateTime.Now + TimeSpan.FromMinutes(5);
+            while ((protocol.Busy as string) == "Yes")
+            {
+                if (DateTime.Now > timeout)
+                {
+                    protocol.Log(8, 5, "Timeout waiting for protocol to become not busy");
+                    return false;
+                }
+
+                protocol.Log(8, 5, "Still busy generating data");
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+            }
+
+            return true;
+        }
+
+        public static void PushAnomalousData(SLProtocolExt protocol, params int[] channels)
+        {
+            if (!WaitUntilNotBusy(protocol))
+                return;
+            string channelsStr = string.Join(", ", channels.Select(i => i + 1));
+
+            var historyGenerated = protocol.Historygenerated as string;
+            if (historyGenerated == "No")
+            {
+                protocol.Log(8, 5, $"Can't generate channels {channelsStr}: history not yet generated");
+                return;
+            }
+
+            protocol.Log(8, 5, $"Generating channels {channelsStr}");
+            protocol.Datagenerated = $"Generating channel {channelsStr}...";
+
+            var startTime = DateTime.FromOADate(Convert.ToDouble(protocol.Starttime));
+            var lastRow = int.Parse(protocol.Lastrownumber.ToString(), CultureInfo.InvariantCulture);
+
+            var anomalousStartTime = dataCollection.GetTime(startTime, lastRow + 1);
+            int sleepEachNSteps = 10;
+            foreach (int i in channels) 
+            {
+                for (int j = 0; j < dataCollection.AnomalousDataPoints; ++j)
+                {
+                    var time = anomalousStartTime.AddMinutes(dataCollection.AnomalousDataPollingTime.TotalMinutes * j);
+                    protocol.SetParameterIndexByKey(Parameter.Audiochannels.tablePid, $"{i + 1}", 2, dataCollection.Data[i].AnomalousData[j], time);
+                    if ((j % sleepEachNSteps) == 0)
+                        Thread.Sleep(1);
+                }
+
+                //Set anomaly generated value
+                protocol.SetParameterIndexByKey(Parameter.Audiochannels.tablePid, $"{i + 1}", 4, "Yes");
+            }
+
+            protocol.Datagenerated = $"Done generating channels {channelsStr}";
+        }
+    }
+}]]>
+		</QAction>
+		<QAction id="60001" name="GenerateHistoryData" encoding="csharp" triggers="60001" dllImport="[ProtocolName].[ProtocolVersion].QAction.1.dll">
+
+			<![CDATA[using Skyline.DataMiner.Net.Database;
+using Skyline.DataMiner.Scripting;
+using Skyline.Protocol.Model;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+
+/// <summary>
+/// QAction to generate data.
+/// </summary>
+public class QAction
+{
+    /// <summary>
+    /// The QAction entry point.
+    /// </summary>
+    /// <param name="protocol">Link with SLProtocol process.</param>
+    public void Run(SLProtocolExt protocol)
+    {
+        if (!Data.WaitUntilNotBusy(protocol))
+            return;
+
+        protocol.Log(8, 5, "Generating history data");
+        protocol.Datagenerated = "Generating history...";
+        protocol.Busy = "Yes";
+
+        var data = Data.GetData();
+        DateTime startTime;
+        int lastRow;
+        var started = protocol.Started as string;
+        if (started == "No")
+        {
+            protocol.Log(8, 5, "Pushing initial data");
+            startTime = DateTime.Now - data.OldDataDuration() - TimeSpan.FromDays(1);
+            protocol.Starttime = startTime;
+            lastRow = -1;
+            protocol.Started = "Yes";
+            for (int i = 0; i < data.Data.Count; ++i)
+            {
+                protocol.AddRowReturnKey(Parameter.Audiochannels.tablePid);
+                protocol.SetParameterIndexByKey(Parameter.Audiochannels.tablePid, $"{i + 1}", 4, "No");
+            }
+        }
+        else
+        {
+            startTime = DateTime.FromOADate(Convert.ToDouble(protocol.Starttime));
+            lastRow = int.Parse(protocol.Lastrownumber.ToString(), CultureInfo.InvariantCulture);
+        }
+
+        List<int> rowsToUpdate = new List<int>();
+        for (int i = 0; i < data.Data.Count; ++i)
+        {
+            string anomalousDataPushed = protocol.GetParameterIndexByKey(Parameter.Audiochannels.tablePid, $"{i + 1}", 4) as string;
+            if (anomalousDataPushed == "No")
+                rowsToUpdate.Add(i);
+        }
+
+        var endTime = DateTime.Now - data.AnomalousDataDuration();
+        int maxValuesPerTime = Data.FastVersion ? 5000 : 10;
+
+        int valuesPushed = 0;
+        for (int j = lastRow + 1; j < lastRow + maxValuesPerTime + 1; j++)
+        {
+            var time = data.GetTime(startTime, j);
+            if (time >= endTime)
+                break;
+
+            foreach (int i in rowsToUpdate)
+            {
+                var value = data.GetNormalValue(i, j);
+                protocol.SetParameterIndexByKey(Parameter.Audiochannels.tablePid, $"{i + 1}", 2, value, time);
+            }
+            ++valuesPushed;
+        }
+
+        protocol.Lastrownumber = lastRow + valuesPushed;
+        if (valuesPushed < maxValuesPerTime)
+        {
+            protocol.Historygenerated = "Yes";
+            protocol.Datagenerated = "History generated";
+        }
+        else
+        {
+            protocol.Historygenerated = "No";
+            protocol.Datagenerated = "Waiting to generate more history";
+        }
+        protocol.Busy = "No";
+    }
+}
+]]>
+		</QAction>
+		<QAction id="102" name="GenerateDataSingle" encoding="csharp" triggers="102" dllImport="[ProtocolName].[ProtocolVersion].QAction.1.dll">
+
+			<![CDATA[using Skyline.DataMiner.Scripting;
+using Skyline.Protocol.Model;
+
+/// <summary>
+/// QAction to generate data.
+/// </summary>
+public class QAction
+{
+	/// <summary>
+	/// The QAction entry point.
+	/// </summary>
+	/// <param name="protocol">Link with SLProtocol process.</param>
+	public void Run(SLProtocolExt protocol)
+	{
+		Data.PushAnomalousData(protocol, 0);
+	}
+}
+]]>
+		</QAction>
+		<QAction id="103" name="GenerateData3" encoding="csharp" triggers="103" dllImport="[ProtocolName].[ProtocolVersion].QAction.1.dll">
+
+			<![CDATA[using Skyline.DataMiner.Scripting;
+using Skyline.Protocol.Model;
+
+/// <summary>
+/// QAction to generate data.
+/// </summary>
+public class QAction
+{
+	/// <summary>
+	/// The QAction entry point.
+	/// </summary>
+	/// <param name="protocol">Link with SLProtocol process.</param>
+	public void Run(SLProtocolExt protocol)
+	{
+        Data.PushAnomalousData(protocol, 1, 2, 3);
+    }
+}
+]]>
+		</QAction>
+		<QAction id="104" name="GenerateData5" encoding="csharp" triggers="104" dllImport="[ProtocolName].[ProtocolVersion].QAction.1.dll">
+
+			<![CDATA[using Skyline.DataMiner.Scripting;
+using Skyline.Protocol.Model;
+
+/// <summary>
+/// QAction to generate data.
+/// </summary>
+public class QAction
+{
+	/// <summary>
+	/// The QAction entry point.
+	/// </summary>
+	/// <param name="protocol">Link with SLProtocol process.</param>
+	public void Run(SLProtocolExt protocol)
+	{
+        Data.PushAnomalousData(protocol, 4);
+    }
+}
+]]>
+		</QAction>
+	</QActions>
+	<Groups>
+		<Group id="1">
+			<Name>Push data</Name>
+			<Description>Push data</Description>
+			<Type>poll action</Type>
+			<Content>
+				<Action>1</Action>
+			</Content>
+		</Group>
+	</Groups>
+	<Actions>
+		<Action id="1">
+			<Name>Push data</Name>
+			<On id="60001">parameter</On>
+			<Type>run actions</Type>
+		</Action>
+	</Actions>
+	<Timers>
+		<Timer id="1">
+			<Name>Fast Timer (2m)</Name>
+			<Time initial="true">300000</Time>
+			<Interval>75</Interval>
+			<Content>
+				<Group>1</Group>
+			</Content>
+		</Timer>
+	</Timers>
+</Protocol>

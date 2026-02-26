@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+
+****************************************************************************
+*  Copyright (c) 2018,  Skyline Communications NV  All Rights Reserved.    *
+****************************************************************************
+
+Revision History:
+
+DATE		VERSION		AUTHOR				COMMENTS
+
+25/03/2023	0.0.0.1		TDP, Skyline		Initial version
+****************************************************************************
+
+-->
+<Protocol xmlns="http://www.skyline.be/protocol">
+	<Name>Empower 2026 - AI - Task Manager</Name>
+	<Description>Simulate the task manager of a server monitoring memory consumption</Description>
+	<Version>0.0.0.1</Version>
+	<Provider>Skyline Communications</Provider>
+	<ElementType>virtual</ElementType>
+	<Type relativeTimers="true">virtual</Type>
+	<Display defaultPage="General" pageOrder="General" wideColumnPages="General" />
+	<SNMP includepages="true">auto</SNMP>
+	<Params>
+		<Param id="1">
+			<Name>TaskManager</Name>
+			<Description>Task Manager</Description>
+			<Information>
+				<Text>Task Manager</Text>
+				<Subtext>Overview of all processes and their memory usage</Subtext>
+			</Information>
+			<Type>array</Type>
+			<ArrayOptions index="0">
+				<ColumnOption idx="0" pid="10" type="retrieved" value="" options=";save"/>
+				<ColumnOption idx="1" pid="11" type="retrieved" value="" options=";disableHeaderSum"/>
+			</ArrayOptions>
+			<Interprete>
+				<RawType>other</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="tab=columns:10|0-11|1,width:150-104,sort:STRING-INT,lines:0,filter:true">table</Type>
+			</Measurement>
+		</Param>
+		<Param id="10" trending="false">
+			<Name>TaskManagerProcessName</Name>
+			<Description>Process Name</Description>
+			<Information>
+				<Text>Process Name</Text>
+				<Subtext>The name of the process</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>text</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="11" historySet="true" trending="true">
+			<Name>TaskManagerMemoryUsage</Name>
+			<Description>Memory Usage</Description>
+			<Information>
+				<Text>Memory usage</Text>
+				<Subtext>The memory usage of the process</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Decimals>2</Decimals>
+				<Units>MB</Units>
+				<Range>
+					<Low>0</Low>
+					<High>10000</High>
+				</Range>
+			</Display>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+		</Param>
+		<Param id="102">
+			<Name>GenerateData</Name>
+			<Description>Generate Data</Description>
+			<Type>write</Type>
+			<Information>
+				<Text>Generate data</Text>
+				<Subtext>Genereate the data for the parameter above.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<LengthType>next param</LengthType>
+				<Type>double</Type>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="110">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Generate Data</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="3" trending="false" save="true">
+			<Name>DataGenerated</Name>
+			<Description>Data Generated?</Description>
+			<Information>
+				<Text>Whether data was generated</Text>
+				<Subtext>Whether data was already generated for the parameter above. To generate data, press the button &#39;Generate Data&#39;.</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>No</DefaultValue>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>General</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+		</Param>
+		<Param id="101" trending="false" save="true">
+			<Name>NextIndex</Name>
+			<Description>Next Index</Description>
+			<Type>read</Type>
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+				<DefaultValue>0</DefaultValue>
+			</Interprete>
+		</Param>
+	</Params>
+	<QActions>
+		<QAction id="102" name="GenerateData" encoding="csharp" triggers="102">
+
+			<![CDATA[using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using Skyline.DataMiner.Net.Helper;
+using Skyline.DataMiner.Scripting;
+using SLDataGateway.API.Collections.Linq;
+
+/// <summary>
+/// QAction to generate data.
+/// </summary>
+public class QAction
+{
+	public class ProcessInformation
+	{
+		public string Name;
+		public double BaseMemoryConsumption;
+		public double JumpSize;
+
+		public ProcessInformation(string name, double baseMemoryConsumption, double jumpSizeRelative)
+		{
+			Name = name;
+			BaseMemoryConsumption = baseMemoryConsumption;
+			JumpSize = jumpSizeRelative * baseMemoryConsumption;
+		}
+	}
+
+	private ProcessInformation[] _processes = new ProcessInformation[]
+	{
+		new ProcessInformation("Google Chrome", 700, 0.55),
+		new ProcessInformation("Java Runtime", 200, 0.23),
+        new ProcessInformation("Microsoft Visual Studio", 1750, 0.20),
+        new ProcessInformation("Explorer", 50, 2.0),
+		new ProcessInformation("Micosoft Excel", 150, 0.19),
+		new ProcessInformation("Microsoft Teams", 650, 0.56),
+		new ProcessInformation("Notepad++", 5, 20.0)
+	};
+	private const double MAX_RANDOM_WALK_SIZE = 7.5;
+
+    private double GenerateGaussian(Random rand, double mean, double stdDev)
+    {
+        //Source: https://stackoverflow.com/questions/218060/random-gaussian-variables
+        double u1 = 1.0 - rand.NextDouble(); //uniform(0,1] random doubles
+        double u2 = 1.0 - rand.NextDouble();
+        double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
+        double randNormal = mean + stdDev * randStdNormal; //random normal(mean,stdDev^2)
+
+        return randNormal;
+    }
+
+	private List<double> GenerateData(Random rand, double level, double jumpSize)
+	{
+        var signal = Enumerable.Repeat(level, 3000).ToList();
+		signal.Add(level + jumpSize * 0.5);
+        signal.Add(level + jumpSize * 0.97);
+        signal.Add(level + jumpSize * 0.98);
+        signal.Add(level + jumpSize * 0.97);
+		signal.AddRange(Enumerable.Repeat(level + jumpSize, 5));
+
+		var data = new List<double>(signal.Count);
+		double maxRandomWalkSize = MAX_RANDOM_WALK_SIZE * level / 100.0;
+		double randomWalkNoise = 0;
+		for (int i = 0; i < signal.Count; ++i)
+		{
+			randomWalkNoise += GenerateGaussian(rand, 0, 0.005 * level);
+			if (randomWalkNoise > maxRandomWalkSize)
+				randomWalkNoise = maxRandomWalkSize;
+			if (randomWalkNoise < -maxRandomWalkSize)
+				randomWalkNoise = -maxRandomWalkSize;
+            data.Add(signal[i] + GenerateGaussian(rand, 0, level * 0.01) + randomWalkNoise);
+        }
+
+		return data;
+	}
+
+    /// <summary>
+    /// The QAction entry point.
+    /// </summary>
+    /// <param name="protocol">Link with SLProtocol process.</param>
+    public void Run(SLProtocolExt protocol)
+	{
+		var generated = protocol.Datagenerated as string;
+		if (generated == "Generating...")
+		{
+			protocol.Log(8, 5, "Already busy generating data");
+			return;
+		}
+
+		protocol.Log(8, 5, "Generating data");
+		protocol.Datagenerated = "Generating...";
+
+		int seed = Convert.ToInt32(protocol.Nextindex);
+		protocol.Nextindex = seed + 1;
+        var rand = new Random(seed);
+        ProcessInformation info;
+        if (seed < _processes.Length)
+        {
+            info = _processes[seed];
+        }
+        else
+        {
+            var level = rand.NextDouble() * 900 + 100;
+            var jumpRelative = rand.NextDouble() * 0.8 + 0.15;
+            info = new ProcessInformation($"Process {seed}", level, jumpRelative);
+        }
+        protocol.AddRow(Parameter.Taskmanager.tablePid, info.Name);
+        var values = GenerateData(rand, info.BaseMemoryConsumption, info.JumpSize);
+
+		var now = DateTime.Now;
+		var pollingTime = TimeSpan.FromMinutes(5);
+		int sleepEachNSteps = 10;
+		for (int i = 0; i < values.Count; ++i)
+		{
+			var time = now.AddSeconds(-pollingTime.TotalSeconds * (values.Count - i - 1));
+            protocol.SetParameterIndexByKey(Parameter.Taskmanager.tablePid, info.Name, 2, values[i], time);
+			if ((i % sleepEachNSteps) == 0)
+				Thread.Sleep(1);
+		}
+
+		protocol.Datagenerated = "Yes";
+	}
+}
+]]>
+		</QAction>
+	</QActions>
+</Protocol>

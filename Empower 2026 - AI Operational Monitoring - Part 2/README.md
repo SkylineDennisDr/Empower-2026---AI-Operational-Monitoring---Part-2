@@ -1,1 +1,1 @@
-# Technical Documentation for Empower 2026 - AI Operational Monitoring - Part 2
+# Empower 2026 - AI Operational Monitoring - Part 2

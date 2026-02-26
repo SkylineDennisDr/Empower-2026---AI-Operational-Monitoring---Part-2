@@ -10,10 +10,10 @@
 	
 -->
 <Protocol xmlns="http://www.skyline.be/protocol">
-	<Name>AI - Commtia DAB</Name>
+	<Name>AI - Commtia DAB - fast</Name>
 	<Description>Commtia DAB Unit</Description>
 	<Provider>Skyline Communications</Provider>
-	<Version>1.0.0.1-fast</Version>
+	<Version>1.0.0.3</Version>
 	<Type>virtual</Type>
 	<Vendor>Commtia</Vendor>
 	<Display defaultPage="SCU" pageOrder="SCU;Amplifier;Demo Control" wideColumnPages="PAs"/>

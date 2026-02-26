@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36705.20 d17.14
+VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Empower 2026 - AI Operational Monitoring - Part 2", "Empower 2026 - AI Operational Monitoring - Part 2\Empower 2026 - AI Operational Monitoring - Part 2.csproj", "{68BFF69E-88AF-4D9C-A6BD-78CB2C1732E1}"
 EndProject
@@ -15,6 +15,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Code Analysis", "Code Analy
 		Internal\Code Analysis\qaction-release.ruleset = Internal\Code Analysis\qaction-release.ruleset
 		Internal\Code Analysis\stylecop.json = Internal\Code Analysis\stylecop.json
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Empower 2026 - AI - Audio bit rate CBR-VBR", "Empower 2025 - AI - Audio bit rate CBR-VBR\Empower 2026 - AI - Audio bit rate CBR-VBR.csproj", "{6DFA0E3D-75A5-90F1-0751-8757763AF766}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Empower 2026 - AI - SFP", "Empower 2025 - AI - SFP\Empower 2026 - AI - SFP.csproj", "{EC94422F-4B62-1E2F-5A61-8DD014076379}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Empower 2026 - AI - Task Manager", "Empower 2025 - AI - Task Manager\Empower 2026 - AI - Task Manager.csproj", "{B128EC9D-7497-6546-21A3-A04F8EBE3C8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Empower 2026 - AI - AMS Server", "Empower 2025 - AMS Server\Empower 2026 - AI - AMS Server.csproj", "{23D733AD-57A4-F75B-A710-13CF815FBBF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Empower 2026 - AI - CMS 1", "Empower 2025 - CMS 1\Empower 2026 - AI - CMS 1.csproj", "{187BFBFA-CF09-E19E-AD94-6DBDA6CB055B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Empower 2026 - AI - CMS 2", "Empower 2025 - CMS 2\Empower 2026 - AI - CMS 2.csproj", "{88E92DBE-A7B8-8EC1-7BDF-734BF45C41C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Empower 2026 - AI - CMS 3", "Empower 2025 - CMS 3\Empower 2026 - AI - CMS 3.csproj", "{87FE3930-6FE2-8BDA-CAFF-BF54821C5F5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +44,34 @@ Global
 		{047416B4-9B17-ACA1-F102-5E8D9DFD21EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{047416B4-9B17-ACA1-F102-5E8D9DFD21EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{047416B4-9B17-ACA1-F102-5E8D9DFD21EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DFA0E3D-75A5-90F1-0751-8757763AF766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DFA0E3D-75A5-90F1-0751-8757763AF766}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DFA0E3D-75A5-90F1-0751-8757763AF766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DFA0E3D-75A5-90F1-0751-8757763AF766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC94422F-4B62-1E2F-5A61-8DD014076379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC94422F-4B62-1E2F-5A61-8DD014076379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC94422F-4B62-1E2F-5A61-8DD014076379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC94422F-4B62-1E2F-5A61-8DD014076379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B128EC9D-7497-6546-21A3-A04F8EBE3C8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B128EC9D-7497-6546-21A3-A04F8EBE3C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B128EC9D-7497-6546-21A3-A04F8EBE3C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B128EC9D-7497-6546-21A3-A04F8EBE3C8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23D733AD-57A4-F75B-A710-13CF815FBBF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23D733AD-57A4-F75B-A710-13CF815FBBF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23D733AD-57A4-F75B-A710-13CF815FBBF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23D733AD-57A4-F75B-A710-13CF815FBBF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{187BFBFA-CF09-E19E-AD94-6DBDA6CB055B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{187BFBFA-CF09-E19E-AD94-6DBDA6CB055B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{187BFBFA-CF09-E19E-AD94-6DBDA6CB055B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{187BFBFA-CF09-E19E-AD94-6DBDA6CB055B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88E92DBE-A7B8-8EC1-7BDF-734BF45C41C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88E92DBE-A7B8-8EC1-7BDF-734BF45C41C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88E92DBE-A7B8-8EC1-7BDF-734BF45C41C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88E92DBE-A7B8-8EC1-7BDF-734BF45C41C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87FE3930-6FE2-8BDA-CAFF-BF54821C5F5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87FE3930-6FE2-8BDA-CAFF-BF54821C5F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87FE3930-6FE2-8BDA-CAFF-BF54821C5F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87FE3930-6FE2-8BDA-CAFF-BF54821C5F5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
