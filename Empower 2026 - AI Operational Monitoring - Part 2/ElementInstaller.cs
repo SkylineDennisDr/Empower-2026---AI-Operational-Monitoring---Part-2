@@ -27,8 +27,19 @@
 			CreateElement("Empower 2026 - AI - Task Manager", "Empower 2026 - AI - Task Manager", "0.0.0.1", viewID);
 
 			viewID = CreateViews(new string[] { "DataMiner Catalog", "Empower 2026", "AI Operational Monitoring", "Pattern Matching Demo" });
-			CreateElement("Empower 2026 - AI - Video server 1 ", "Empower 2026 - AI - Video Server - fast", "0.0.0.1", viewID);
-			CreateElement("Empower 2026 - AI - Video server 2 ", "Empower 2026 - AI - Video Server - fast", "0.0.0.1", viewID);
+			bool created = CreateElement("Empower 2026 - AI - Video server 1", "Empower 2026 - AI - Video Server - fast", "0.0.0.1", viewID);
+			if (created)
+			{
+				System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+				engine.FindElement("Empower 2026 - AI - Video server 1")?.SetParameter(102, 1);
+			}
+			created = CreateElement("Empower 2026 - AI - Video server 2", "Empower 2026 - AI - Video Server - fast", "0.0.0.1", viewID);
+			if (created)
+			{
+				System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+				engine.FindElement("Empower 2026 - AI - Video server 2")?.SetParameter(102, 1);
+			}
+			created = CreateElement("Empower 2026 - AI - PM in tables ", "Empower 2026 - AI - PM in Tables - fast", "1.0.0.3", viewID);
 
 			viewID = CreateViews(new string[] { "DataMiner Catalog", "Empower 2026", "AI Operational Monitoring", "Proactive Detection Demo" });
 			CreateElement("Empower 2026 - AI - SFP Monitor", "Empower 2026 - AI - SFP - fast", "0.0.0.1", viewID);
@@ -136,7 +147,7 @@
 			return lastExistingViewID.Value;
 		}
 
-		private void CreateElement(string elementName, string protocolName, string protocolVersion, int viewID,
+		private bool CreateElement(string elementName, string protocolName, string protocolVersion, int viewID,
 			string trendTemplate = "Default", string alarmTemplate = "")
 		{
 			var request = new AddElementMessage
@@ -151,9 +162,10 @@
 
 			var dms = engine.GetDms();
 			if (dms.ElementExists(elementName))
-				return;
+				return false;
 
 			engine.SendSLNetSingleResponseMessage(request);
+			return true;
 		}
 	}
 }

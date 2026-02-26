@@ -14,7 +14,7 @@ DATE		VERSION		AUTHOR				COMMENTS
 
 -->
 <Protocol xmlns="http://www.skyline.be/protocol">
-	<Name>PM in Tables</Name>
+	<Name>Empower 2026 - AI - PM in Tables - fast</Name>
 	<Description>Protocol to demonstrate Pattern matching on tables</Description>
 	<Version>1.0.0.3</Version>
 	<ElementType>virtual</ElementType>
